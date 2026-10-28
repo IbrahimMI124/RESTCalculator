@@ -2,6 +2,10 @@
 pipeline {
     agent any
 
+    options {
+        skipDefaultCheckout(true)
+    }
+
     tools {
         jdk 'JDK21'
         maven 'Maven'
@@ -10,7 +14,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                git branch: 'main',
+                    url: 'https://github.com/IbrahimMI124/RESTCalculator.git'
             }
         }
 
