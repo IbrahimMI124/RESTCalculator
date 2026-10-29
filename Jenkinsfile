@@ -40,10 +40,28 @@ pipeline {
     post {
         success {
             echo 'Calculator build and tests succeeded.'
+
+            mail to: 'your-email@example.com',
+                 subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: """Calculator build and tests succeeded.
+
+Job: ${env.JOB_NAME}
+Build: #${env.BUILD_NUMBER}
+Build URL: ${env.BUILD_URL}"""
         }
+
         failure {
             echo 'Calculator build or tests failed.'
+
+            mail to: 'your-email@example.com',
+                 subject: "FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: """Calculator build or tests failed.
+
+Job: ${env.JOB_NAME}
+Build: #${env.BUILD_NUMBER}
+Build URL: ${env.BUILD_URL}"""
         }
+
         always {
             echo 'Pipeline execution completed.'
         }
