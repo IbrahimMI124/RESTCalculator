@@ -41,7 +41,7 @@ pipeline {
         success {
             echo 'Calculator build and tests succeeded.'
 
-            mail to: 'your-email@example.com',
+            mail to: 'mohdibrahim124.mi@gmail.com',
                  subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                  body: """Calculator build and tests succeeded.
 
