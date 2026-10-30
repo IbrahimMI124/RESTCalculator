@@ -146,36 +146,27 @@ pipeline {
 
     post {
         success {
-            echo 'Calculator CI/CD pipeline succeeded.'
+            echo 'Calculator build and tests succeeded.'
 
-            emailext(
-                to: 'mohdibrahim124.mi@gmail.com',
-                subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """Calculator CI/CD pipeline succeeded.
+            mail to: 'mohdibrahim124.mi@gmail.com',
+                 subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: """Calculator build and tests succeeded.
 
 Job: ${env.JOB_NAME}
 Build: #${env.BUILD_NUMBER}
-Commit: ${env.GIT_COMMIT ?: 'See checkout log'}
-Build URL: ${env.BUILD_URL}
-"""
-            )
+Build URL: ${env.BUILD_URL}"""
         }
 
         failure {
-            echo 'Calculator CI/CD pipeline failed.'
+            echo 'Calculator build or tests failed.'
 
-            emailext(
-                to: 'mohdibrahim124.mi@gmail.com',
-                subject: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """Calculator CI/CD pipeline failed.
+            mail to: 'your-email@example.com',
+                 subject: "FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: """Calculator build or tests failed.
 
 Job: ${env.JOB_NAME}
 Build: #${env.BUILD_NUMBER}
-Build URL: ${env.BUILD_URL}
-
-Inspect the Jenkins console output for details.
-"""
-            )
+Build URL: ${env.BUILD_URL}"""
         }
 
         always {
