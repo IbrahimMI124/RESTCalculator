@@ -99,6 +99,11 @@ pipeline {
 
                     docker compose config --quiet
 
+                    # Remove stale containers and the old project network so a
+                    # previous failed deploy cannot leave services stranded
+                    # without network connectivity.
+                    docker compose down --remove-orphans
+
                     docker compose pull calculator
 
                     docker compose up \
