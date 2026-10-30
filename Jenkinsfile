@@ -14,6 +14,11 @@ pipeline {
         timeout(time: 30, unit: 'MINUTES')
     }
 
+    triggers {
+        // GitHub webhooks are preferred; Poll SCM is the built-in fallback.
+        pollSCM('H/5 * * * *')
+    }
+
     environment {
         DOCKERHUB_USERNAME = 'ibrahimmi124'
         IMAGE_NAME = "${DOCKERHUB_USERNAME}/calculator-service"
@@ -99,12 +104,14 @@ pipeline {
 
                     docker compose config --quiet
 
+                    # Pull first so a registry failure does not take down the
+                    # currently running stack.
+                    docker compose pull calculator
+
                     # Remove stale containers and the old project network so a
                     # previous failed deploy cannot leave services stranded
                     # without network connectivity.
                     docker compose down --remove-orphans
-
-                    docker compose pull calculator
 
                     docker compose up \
                       -d \

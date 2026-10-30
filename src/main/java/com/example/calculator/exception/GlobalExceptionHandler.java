@@ -1,4 +1,3 @@
-
 package com.example.calculator.exception;
 
 import com.example.calculator.dto.ErrorResponse;
@@ -67,5 +66,3 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(status).body(body);
     }
 }
-
-//testing email

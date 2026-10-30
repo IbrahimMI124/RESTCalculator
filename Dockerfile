@@ -32,7 +32,7 @@ WORKDIR /app
 
 # Copy only the executable JAR from the build stage
 COPY --from=build --chown=app:app \
-    /app/target/calculator-service-1.0.0.jar \
+    /app/target/calculator-service-*.jar \
     /app/app.jar
 
 # Run as an unprivileged user

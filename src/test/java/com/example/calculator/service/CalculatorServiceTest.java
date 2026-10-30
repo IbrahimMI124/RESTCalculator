@@ -1,4 +1,3 @@
-
 package com.example.calculator.service;
 
 import org.junit.jupiter.api.BeforeEach;

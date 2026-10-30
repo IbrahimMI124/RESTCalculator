@@ -1,4 +1,3 @@
-
 package com.example.calculator.dto;
 
 public record CalculatorResponse(

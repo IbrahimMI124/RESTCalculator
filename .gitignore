@@ -1,5 +1,17 @@
 HELP.md
 target/
+
+### Environment / secrets ###
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.jks
+*.log
+.DS_Store
+
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

@@ -1,11 +1,11 @@
-
 package com.example.calculator.controller;
 
-import com.example.calculator.dto.ErrorResponse;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.containsString;
@@ -19,18 +19,26 @@ class CalculatorControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
-    void addEndpointShouldReturnJsonResult() throws Exception {
-        mockMvc.perform(get("/api/v1/add")
-                        .param("a", "2")
-                        .param("b", "3"))
+    @ParameterizedTest(name = "{0}({1}, {2}) = {3}")
+    @CsvSource({
+            "add, 2, 3, 5",
+            "subtract, 8, 3, 5",
+            "multiply, 4, 3, 12",
+            "divide, 10, 2, 5"
+    })
+    void operationEndpointShouldReturnJsonResult(
+            String operation, double a, double b, double expected)
+            throws Exception {
+        mockMvc.perform(get("/api/v1/" + operation)
+                        .param("a", String.valueOf(a))
+                        .param("b", String.valueOf(b)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(
                         "application/json"))
-                .andExpect(jsonPath("$.operation").value("add"))
-                .andExpect(jsonPath("$.a").value(2.0))
-                .andExpect(jsonPath("$.b").value(3.0))
-                .andExpect(jsonPath("$.result").value(5.0));
+                .andExpect(jsonPath("$.operation").value(operation))
+                .andExpect(jsonPath("$.a").value(a))
+                .andExpect(jsonPath("$.b").value(b))
+                .andExpect(jsonPath("$.result").value(expected));
     }
 
     @Test
