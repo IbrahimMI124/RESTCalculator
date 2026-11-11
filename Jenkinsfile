@@ -16,7 +16,7 @@ pipeline {
 
     triggers {
         // GitHub webhooks are preferred; Poll SCM is the built-in fallback.
-        pollSCM('H/5 * * * *')
+        pollSCM('H/60 * * * *')
     }
 
     environment {
